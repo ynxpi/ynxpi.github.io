@@ -1,82 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ynx Pi UI</title>
-  <link href="style.css" rel="stylesheet"/>
+  <title>Ynx Pi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Share Tech Mono', monospace;
+      background: black;
+      color: white;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #snow-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      font-size: 1em;
+      color: white;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    #clock, #battery-status {
+      position: fixed;
+      font-size: 0.9em;
+      color: #ff0040;
+      z-index: 3;
+    }
+    #clock { top: 5px; left: 10px; }
+    #battery-status { top: 5px; right: 10px; }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 3em;
+      color: #ff0040;
+      z-index: 2;
+      position: relative;
+    }
+
+    .button-container, .submenu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      z-index: 2;
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .btn {
+      background-color: black;
+      color: #ff0040;
+      font-size: 1.5em;
+      border: 3px solid #ff0040;
+      padding: 15px 30px;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #330010;
+      border-color: #ff3366;
+      color: white;
+    }
+
+    .submenu { display: none; }
+
+    .popup {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: black;
+      color: #ff0040;
+      border: 3px solid #ff0040;
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 1.2em;
+      opacity: 0;
+      z-index: 1000;
+      transition: all 0.5s ease;
+      text-align: center;
+    }
+
+    .popup.show {
+      bottom: 80px;
+      opacity: 1;
+    }
+
+    .popup-bar {
+      height: 5px;
+      background: #ff0040;
+      margin-top: 10px;
+      border-radius: 2px;
+      width: 0%;
+      transition: none;
+    }
+
+    #startup-screen,
+    #auth-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 2em;
+    }
+
+    #startup-screen h2,
+    #auth-screen h2 {
+      color: #ff0040;
+      margin-bottom: 1em;
+    }
+
+    #auth-screen input {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.1em;
+      padding: 10px;
+      width: 90%;
+      max-width: 300px;
+      margin: 5px 0;
+      background: #000;
+      border: 2px solid #ff0040;
+      color: white;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .btn {
+        font-size: 1.2em;
+        padding: 10px 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Auth Screen -->
-  <div id="auth-screen" class="overlay">
-    <h2>🔐 Login or Sign Up</h2>
-    <input id="username" placeholder="Username"/>
-    <input id="password" type="password" placeholder="Password"/>
-    <button onclick="authUser('login')">Login</button>
-    <button onclick="authUser('signup')">Sign Up</button>
-    <div id="auth-msg"></div>
+  <div id="snow-container"></div>
+  <div id="clock">--:--</div>
+  <div id="battery-status">🔋 --%</div>
+
+  <div id="auth-screen">
+    <h2>Login / Signup</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button class="btn" onclick="handleAuth()">Continue</button>
+    <small style="margin-top:1em;color:gray;">Dev login: ynx / Lilyismylilsister1</small>
   </div>
 
-  <!-- Startup -->
-  <div id="startup-screen" class="overlay" onclick="startApp()" style="display:none">
+  <div id="startup-screen" style="display:none;" onclick="startUI()">
     🚀 Tap to Start
   </div>
 
-  <!-- Snow -->
-  <div id="snow-container"></div>
+  <h1 id="main-title" style="display:none;">Y N X  P I</h1>
 
-  <!-- Clock & Battery -->
-  <div id="clock">--:--</div>
-  <div id="battery">🔋 --%</div>
-
-  <!-- Main UI -->
-  <div id="main-ui" style="display:none">
-    <h1>Y N X P I</h1>
-    <div class="button-container" id="main-menu">
-      <button class="btn" onmousedown="startHold(this,'USB & wireless tools')" onmouseup="clearHold()" onclick="showSub('attacks')">⚔️ ATTACKS</button>
-      <button class="btn" onmousedown="startHold(this,'Interact with cards')" onmouseup="clearHold()" onclick="showSub('access')">🔐 ACCESS</button>
-      <button class="btn" onmousedown="startHold(this,'Meta Quest Tools')" onmouseup="clearHold()" onclick="showSub('meta')">🕶️ META VR</button>
-      <button class="btn" onmousedown="startHold(this,'PS3 Tools')" onmouseup="clearHold()" onclick="showSub('ps3')">🎮 PS3</button>
-      <button class="btn" onmousedown="startHold(this,'System tools')" onmouseup="clearHold()" onclick="showSub('system')">🛠️ SYSTEM</button>
-      <button class="btn" onmousedown="startHold(this,'Configure settings')" onmouseup="clearHold()" onclick="showSub('settings')">⚙️ SETTINGS</button>
-    </div>
-
-    <!-- Submenus -->
-    <div class="submenu" id="access">
-      <button class="btn">📻 RFID</button><button class="btn">📡 NFC</button>
-      <button class="btn">🔘 iButton</button><button class="btn">📶 Sub‑GHz</button>
-      <button class="btn" onclick="goBack()">🔙 Back</button>
-    </div>
-    <div class="submenu" id="attacks">
-      <button class="btn">🧠 Bad USB</button><button class="btn">📺 IR</button>
-      <button class="btn">🔧 GPIO</button><button class="btn">🌐 Wi‑Fi</button>
-      <button class="btn">📲 Bluetooth</button>
-      <button class="btn" onclick="goBack()">🔙 Back</button>
-    </div>
-    <div class="submenu" id="meta">
-      <button class="btn">🔗 Pair with Quest</button><button class="btn">🖥️ Cast Monitor</button>
-      <button class="btn">🧰 Dev Mode</button><button class="btn">📂 Send APK</button>
-      <button class="btn">🎮 Controller Test</button><button class="btn" onclick="goBack()">🔙 Back</button>
-    </div>
-    <div class="submenu" id="ps3">
-      <button class="btn">📡 WebMAN</button><button class="btn">📂 Send PKG</button>
-      <button class="btn">🕹️ Controller Sync</button><button class="btn">🧰 CFW Tools</button>
-      <button class="btn">💿 Game Loader</button><button class="btn" onclick="goBack()">🔙 Back</button>
-    </div>
-    <div class="submenu" id="system">
-      <button class="btn">🔐 U2F</button><button class="btn">🐞 Debug</button>
-      <button class="btn">🔋 Battery</button><button class="btn">⬆️ Update</button>
-      <button class="btn" onclick="goBack()">🔙 Back</button>
-    </div>
-    <div class="submenu" id="settings">
-      <button class="btn">🔊 Sound</button><button class="btn">💡 Display</button>
-      <button class="btn" onclick="goBack()">🔙 Back</button>
-    </div>
+  <div class="button-container" id="main-menu" style="display:none;">
+    <button class="btn" onmousedown="startHold(this, 'Meta Quest Tools')" onmouseup="clearHold()" onclick="showSubmenu('meta')">🕶️ META VR</button>
+    <button class="btn" onmousedown="startHold(this, 'Ps3 Tools')" onmouseup="clearHold()" onclick="showSubmenu('ps3')">🎮 PS3</button>
+    <button class="btn" onmousedown="startHold(this, 'Card + Signal Tools')" onmouseup="clearHold()" onclick="showSubmenu('access')">🔐 ACCESS</button>
+    <button class="btn" onmousedown="startHold(this, 'System Tools')" onmouseup="clearHold()" onclick="showSubmenu('system')">🛠️ SYSTEM</button>
+    <button class="btn" onmousedown="startHold(this, 'Wireless & USB Attacks')" onmouseup="clearHold()" onclick="showSubmenu('attacks')">⚔️ ATTACKS</button>
+    <button class="btn" onmousedown="startHold(this, 'Customize & Settings')" onmouseup="clearHold()" onclick="showSubmenu('settings')">⚙️ SETTINGS</button>
   </div>
 
-  <!-- Popup -->
-  <div id="popup"><div id="popup-text"></div><div id="popup-bar"></div></div>
+  <div class="submenu" id="meta">
+    <button class="btn">🔗 Pair with Quest</button>
+    <button class="btn">🖥️ Cast Monitor</button>
+    <button class="btn">🧰 Dev Mode</button>
+    <button class="btn">📂 Send APK</button>
+    <button class="btn">🎮 Controller Test</button>
+    <button class="btn" onclick="goBack()">🔙 Back</button>
+  </div>
 
-  <script src="script.js"></script>
+  <div class="submenu" id="ps3">
+    <button class="btn">📡 WebMAN</button>
+    <button class="btn">📂 Send PKG</button>
+    <button class="btn">🧰 CFW Tools</button>
+    <button class="btn">🕹️ Sync Controller</button>
+    <button class="btn">💿 Game Loader</button>
+    <button class="btn" onclick="goBack()">🔙 Back</button>
+  </div>
+
+  <div class="submenu" id="access">
+    <button class="btn">📻 RFID</button>
+    <button class="btn">📡 NFC</button>
+    <button class="btn">🔘 iButton</button>
+    <button class="btn">📶 Sub-GHz</button>
+    <button class="btn" onclick="goBack()">🔙 Back</button>
+  </div>
+
+  <div class="submenu" id="attacks">
+    <button class="btn">🧠 Bad USB</button>
+    <button class="btn">📺 IR Control</button>
+    <button class="btn">🔧 GPIO</button>
+    <button class="btn">🌐 Wi-Fi</button>
+    <button class="btn">📲 Bluetooth</button>
+    <button class="btn" onclick="goBack()">🔙 Back</button>
+  </div>
+
+  <div class="submenu" id="system">
+    <button class="btn">🔐 U2F</button>
+    <button class="btn">🐞 Debug Tools</button>
+    <button class="btn">🔋 Battery Info</button>
+    <button class="btn">⬆️ Updater</button>
+    <button class="btn" onclick="goBack()">🔙 Back</button>
+  </div>
+
+  <div class="submenu" id="settings">
+    <button class="btn">🔊 Sound</button>
+    <button class="btn">💡 Display</button>
+    <button class="btn" onclick="goBack()">🔙 Back</button>
+  </div>
+
+  <div id="popup" class="popup">
+    <div id="popup-text"></div>
+    <div class="popup-bar" id="popup-bar"></div>
+  </div>
+
+  <script>
+    let holdTimer;
+
+    function startUI() {
+      document.getElementById('startup-screen').style.display = 'none';
+      document.getElementById('main-menu').style.display = 'flex';
+      document.getElementById('main-title').style.display = 'block';
+      requestFull();
+      keepAwake();
+    }
+
+    function handleAuth() {
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      if (u === "ynx" && p === "Lilyismylilsister1") {
+        document.getElementById("auth-screen").style.display = "none";
+        document.getElementById("startup-screen").style.display = "flex";
+      } else {
+        alert("Only dev login supported offline.\nUsername: ynx\nPassword: Lilyismylilsister1");
+      }
+    }
+
+    function showSubmenu(id) {
+      document.getElementById('main-menu').style.display = 'none';
+      document.querySelectorAll('.submenu').forEach(m => m.style.display = 'none');
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function goBack() {
+      document.querySelectorAll('.submenu').forEach(m => m.style.display = 'none');
+      document.getElementById('main-menu').style.display = 'flex';
+    }
+
+    function startHold(el, msg) {
+      holdTimer = setTimeout(() => showPopup(msg), 600);
+    }
+
+    function clearHold() {
+      clearTimeout(holdTimer);
+    }
+
+    function showPopup(msg) {
+      const popup = document.getElementById('popup');
+      const text = document.getElementById('popup-text');
+      const bar = document.getElementById('popup-bar');
+
+      text.textContent = msg;
+      popup.classList.add('show');
+      bar.style.transition = 'none';
+      bar.style.width = '100%';
+      void bar.offsetWidth;
+      const duration = Math.max(2000, msg.length * 80);
+      bar.style.transition = `width ${duration}ms linear`;
+      bar.style.width = '0%';
+      setTimeout(() => popup.classList.remove('show'), duration);
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent = `⏰ ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+    }
+    setInterval(updateClock, 1000); updateClock();
+
+    function updateBattery() {
+      if (!navigator.getBattery) return;
+      navigator.getBattery().then(b => {
+        const level = Math.round(b.level * 100);
+        document.getElementById('battery-status').textContent = `🔋 ${level}%`;
+      });
+    }
+    updateBattery();
+
+    function createSnowflake() {
+      const flake = document.createElement("div");
+      flake.classList.add("snowflake");
+      flake.textContent = "❄";
+      flake.style.left = Math.random() * window.innerWidth + "px";
+      flake.style.fontSize = (Math.random() * 10 + 10) + "px";
+      flake.style.animationDuration = (Math.random() * 2 + 2) + "s";
+      document.getElementById("snow-container").appendChild(flake);
+      setTimeout(() => flake.remove(), 4000);
+    }
+    setInterval(createSnowflake, 120);
+
+    async function requestFull() {
+      const el = document.documentElement;
+      if (el.requestFullscreen) await el.requestFullscreen();
+    }
+
+    async function keepAwake() {
+      try {
+        if ('wakeLock' in navigator) await navigator.wakeLock.request('screen');
+      } catch (err) {
+        console.warn('Wake lock failed:', err);
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.getElementById('startup-screen').style.display = 'flex';
+        document.getElementById('main-menu').style.display = 'none';
+        document.getElementById('main-title').style.display = 'none';
+        requestFull();
+      }
+    });
+  </script>
 </body>
 </html>
