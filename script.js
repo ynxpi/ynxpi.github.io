@@ -101,6 +101,24 @@
       requestFull();
     }
   });
+  function detectDevice() {
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (/quest|oculus/i.test(ua)) return "Meta Quest / VR";
+  if (/android/i.test(ua)) return "Android Phone";
+  if (/iphone|ipad|ipod/i.test(ua)) return "iOS Device";
+  if (/windows nt/i.test(ua)) return "Windows PC";
+  if (/macintosh|mac os x/i.test(ua)) return "Mac";
+  if (/linux/i.test(ua)) return "Linux PC";
+  if (/xbox/i.test(ua)) return "Xbox";
+  if (/playstation 3/i.test(ua)) return "PlayStation 3";
+  if (/playstation 4/i.test(ua)) return "PlayStation 4";
+  if (/playstation 5/i.test(ua)) return "PlayStation 5";
+
+  return "Unknown Device";
+}
+const device = detectDevice();
+document.body.insertAdjacentHTML('afterbegin', `<div style="color:red;position:fixed;top:0;left:0;padding:10px;z-index:9999;">Device: ${device}</div>`);
 
   // Login system
   async function login(event) {
