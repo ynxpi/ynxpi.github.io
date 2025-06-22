@@ -1,39 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ynx Pi UI</title>
-  <link href="style.css" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-  <!-- LOGIN / SIGNUP SCREEN -->
-  <div id="auth-screen">
+  <!-- Auth Screen -->
+  <div id="auth-screen" class="overlay">
     <h2>🔐 Login or Sign Up</h2>
-    <input id="username" placeholder="Username" />
-    <input id="password" type="password" placeholder="Password" />
+    <input id="username" placeholder="Username"/>
+    <input id="password" type="password" placeholder="Password"/>
     <button onclick="authUser('login')">Login</button>
     <button onclick="authUser('signup')">Sign Up</button>
     <div id="auth-msg"></div>
   </div>
 
-  <!-- STARTUP SCREEN -->
-  <div id="startup-screen" onclick="startApp()" style="display:none;">
+  <!-- Startup -->
+  <div id="startup-screen" class="overlay" onclick="startApp()" style="display:none">
     🚀 Tap to Start
   </div>
 
-  <!-- MAIN UI -->
-  <div id="main-ui" style="display:none;">
-    <h1>Y N X P I</h1>
-    <div class="button-container">
-      <button class="btn" onclick="onClick('access')">🔐 ACCESS TOOLS</button>
-      <button class="btn" onclick="onClick('attacks')">⚔️ ATTACKS</button>
-      <button class="btn" onclick="onClick('meta')">🕶️ META VR</button>
-      <button class="btn" onclick="onClick('ps3')">🎮 PS3 CONTROL</button>
-      <button class="btn" onclick="onClick('system')">🛠️ SYSTEM</button>
-      <button class="btn" onclick="onClick('settings')">⚙️ SETTINGS</button>
+  <!-- Snow -->
+  <div id="snow-container"></div>
+
+  <!-- Clock & Battery -->
+  <div id="clock">--:--</div>
+  <div id="battery">🔋 --%</div>
+
+  <!-- Main UI -->
+  <div id="main-ui" style="display:none">
+    <h1>Y N X P I</h1>
+    <div class="button-container" id="main-menu">
+      <button class="btn" onmousedown="startHold(this,'USB & wireless tools')" onmouseup="clearHold()" onclick="showSub('attacks')">⚔️ ATTACKS</button>
+      <button class="btn" onmousedown="startHold(this,'Interact with cards')" onmouseup="clearHold()" onclick="showSub('access')">🔐 ACCESS</button>
+      <button class="btn" onmousedown="startHold(this,'Meta Quest Tools')" onmouseup="clearHold()" onclick="showSub('meta')">🕶️ META VR</button>
+      <button class="btn" onmousedown="startHold(this,'PS3 Tools')" onmouseup="clearHold()" onclick="showSub('ps3')">🎮 PS3</button>
+      <button class="btn" onmousedown="startHold(this,'System tools')" onmouseup="clearHold()" onclick="showSub('system')">🛠️ SYSTEM</button>
+      <button class="btn" onmousedown="startHold(this,'Configure settings')" onmouseup="clearHold()" onclick="showSub('settings')">⚙️ SETTINGS</button>
+    </div>
+
+    <!-- Submenus -->
+    <div class="submenu" id="access">
+      <button class="btn">📻 RFID</button><button class="btn">📡 NFC</button>
+      <button class="btn">🔘 iButton</button><button class="btn">📶 Sub‑GHz</button>
+      <button class="btn" onclick="goBack()">🔙 Back</button>
+    </div>
+    <div class="submenu" id="attacks">
+      <button class="btn">🧠 Bad USB</button><button class="btn">📺 IR</button>
+      <button class="btn">🔧 GPIO</button><button class="btn">🌐 Wi‑Fi</button>
+      <button class="btn">📲 Bluetooth</button>
+      <button class="btn" onclick="goBack()">🔙 Back</button>
+    </div>
+    <div class="submenu" id="meta">
+      <button class="btn">🔗 Pair with Quest</button><button class="btn">🖥️ Cast Monitor</button>
+      <button class="btn">🧰 Dev Mode</button><button class="btn">📂 Send APK</button>
+      <button class="btn">🎮 Controller Test</button><button class="btn" onclick="goBack()">🔙 Back</button>
+    </div>
+    <div class="submenu" id="ps3">
+      <button class="btn">📡 WebMAN</button><button class="btn">📂 Send PKG</button>
+      <button class="btn">🕹️ Controller Sync</button><button class="btn">🧰 CFW Tools</button>
+      <button class="btn">💿 Game Loader</button><button class="btn" onclick="goBack()">🔙 Back</button>
+    </div>
+    <div class="submenu" id="system">
+      <button class="btn">🔐 U2F</button><button class="btn">🐞 Debug</button>
+      <button class="btn">🔋 Battery</button><button class="btn">⬆️ Update</button>
+      <button class="btn" onclick="goBack()">🔙 Back</button>
+    </div>
+    <div class="submenu" id="settings">
+      <button class="btn">🔊 Sound</button><button class="btn">💡 Display</button>
+      <button class="btn" onclick="goBack()">🔙 Back</button>
     </div>
   </div>
+
+  <!-- Popup -->
+  <div id="popup"><div id="popup-text"></div><div id="popup-bar"></div></div>
 
   <script src="script.js"></script>
 </body>
