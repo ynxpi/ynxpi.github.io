@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ynx Pi UI</title>
+  <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- LOGIN / SIGNUP SCREEN -->
+  <div id="auth-screen">
+    <h2>🔐 Login or Sign Up</h2>
+    <input id="username" placeholder="Username" />
+    <input id="password" type="password" placeholder="Password" />
+    <button onclick="authUser('login')">Login</button>
+    <button onclick="authUser('signup')">Sign Up</button>
+    <div id="auth-msg"></div>
+  </div>
+
+  <!-- STARTUP SCREEN -->
+  <div id="startup-screen" onclick="startApp()" style="display:none;">
+    🚀 Tap to Start
+  </div>
+
+  <!-- MAIN UI -->
+  <div id="main-ui" style="display:none;">
+    <h1>Y N X P I</h1>
+    <div class="button-container">
+      <button class="btn" onclick="onClick('access')">🔐 ACCESS TOOLS</button>
+      <button class="btn" onclick="onClick('attacks')">⚔️ ATTACKS</button>
+      <button class="btn" onclick="onClick('meta')">🕶️ META VR</button>
+      <button class="btn" onclick="onClick('ps3')">🎮 PS3 CONTROL</button>
+      <button class="btn" onclick="onClick('system')">🛠️ SYSTEM</button>
+      <button class="btn" onclick="onClick('settings')">⚙️ SETTINGS</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
