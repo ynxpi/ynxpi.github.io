@@ -176,7 +176,6 @@
     <input type="text" id="username" placeholder="Username" />
     <input type="password" id="password" placeholder="Password" />
     <button class="btn" onclick="handleAuth()">Continue</button>
-    <small style="margin-top:1em;color:gray;">Dev login: ynx / Lilyismylilsister1</small>
   </div>
 
   <div id="startup-screen" style="display:none;" onclick="startUI()">
@@ -262,12 +261,11 @@
     function handleAuth() {
       const u = document.getElementById("username").value.trim();
       const p = document.getElementById("password").value.trim();
-      if (u === "ynx" && p === "Lilyismylilsister1") {
+      if ( (u === "mason" && p === "devishere") || (u === "bentley" && p === "devishere") ) 
+      {
         document.getElementById("auth-screen").style.display = "none";
         document.getElementById("startup-screen").style.display = "flex";
-      } else {
-        alert("Only dev login supported offline.\nUsername: ynx\nPassword: Lilyismylilsister1");
-      }
+      } 
     }
 
     function showSubmenu(id) {
