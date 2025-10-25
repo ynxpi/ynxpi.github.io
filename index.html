@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ynx-Rogue Key Generator</title>
+<style>
+body { font-family: sans-serif; margin: 40px; }
+input, button { padding: 8px; margin: 5px 0; display:block; width: 300px; }
+#key { font-weight: bold; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Ynx-Rogue Key Generator</h1>
+
+<div id="step1">
+  <h3>Step 1: Enter your email</h3>
+  <input id="email" placeholder="Enter your email" />
+  <button onclick="sendCode()">Send Verification Code</button>
+</div>
+
+<div id="step2" style="display:none">
+  <h3>Step 2: Enter verification code</h3>
+  <input id="code" placeholder="Enter the code you received" />
+  <button onclick="verifyCode()">Verify Code</button>
+</div>
+
+<div id="step3" style="display:none">
+  <h3>Step 3: Choose your display name</h3>
+  <input id="displayName" placeholder="Enter your display name" />
+  <button onclick="setDisplayName()">Finish & Get Key</button>
+</div>
+
+<div id="step4" style="display:none">
+  <h3>Your Personal Key</h3>
+  <p id="key"></p>
+  <button onclick="copyKey()">Copy Key</button>
+</div>
+
+<script>
+const apiBase = "https://your-backend-url.com"; // replace with your server URL
+let tempEmail = "";
+let tempCode = "";
+let issuedKey = "";
+
+async function sendCode() {
+  const email = document.getElementById("email").value.trim();
+  if (!email) return alert("Please enter an email");
+  const res = await fetch(`${apiBase}/send-code`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({email})
+  });
+  const data = await res.json();
+  if (data.success) {
+    alert("Verification code sent to your email!");
+    tempEmail = email;
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
+  } else {
+    alert(data.error);
+  }
+}
+
+async function verifyCode() {
+  const code = document.getElementById("code").value.trim();
+  if (!code) return alert("Enter the code");
+  
+  // temporarily store code, move to display name step
+  tempCode = code;
+  document.getElementById("step2").style.display = "none";
+  document.getElementById("step3").style.display = "block";
+}
+
+async function setDisplayName() {
+  const displayName = document.getElementById("displayName").value.trim();
+  if (!displayName) return alert("Enter a display name");
+
+  const res = await fetch(`${apiBase}/verify-code`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      email: tempEmail,
+      code: tempCode,
+      displayName
+    })
+  });
+  const data = await res.json();
+  if (data.success) {
+    issuedKey = data.key;
+    document.getElementById("step3").style.display = "none";
+    document.getElementById("step4").style.display = "block";
+    document.getElementById("key").innerText = issuedKey;
+  } else {
+    alert(data.error);
+  }
+}
+
+function copyKey() {
+  navigator.clipboard.writeText(issuedKey);
+  alert("Key copied to clipboard!");
+}
+</script>
+
+</body>
+</html>
