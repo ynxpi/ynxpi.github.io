@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Ynx-Rogue Key Generator</title>
+<link rel="stylesheet" href="style.css">
 <style>
 body { font-family: sans-serif; margin: 40px; }
 input, button { padding: 8px; margin: 5px 0; display:block; width: 300px; }
@@ -38,64 +39,79 @@ input, button { padding: 8px; margin: 5px 0; display:block; width: 300px; }
 </div>
 
 <script>
-const apiBase = "https://your-backend-url.com"; // replace with your server URL
+const apiBase = "https://your-backend-url.com"; // Replace with your deployed backend
+
 let tempEmail = "";
 let tempCode = "";
 let issuedKey = "";
 
+// Step 1: send verification code
 async function sendCode() {
   const email = document.getElementById("email").value.trim();
   if (!email) return alert("Please enter an email");
-  const res = await fetch(`${apiBase}/send-code`, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({email})
-  });
-  const data = await res.json();
-  if (data.success) {
-    alert("Verification code sent to your email!");
-    tempEmail = email;
-    document.getElementById("step1").style.display = "none";
-    document.getElementById("step2").style.display = "block";
-  } else {
-    alert(data.error);
+
+  try {
+    const res = await fetch(`${apiBase}/send-code`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email})
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert("Verification code sent to your email!");
+      tempEmail = email;
+      document.getElementById("step1").style.display = "none";
+      document.getElementById("step2").style.display = "block";
+    } else {
+      alert(data.error);
+    }
+  } catch (err) {
+    alert("Error sending code. Try again.");
+    console.error(err);
   }
 }
 
+// Step 2: verify code
 async function verifyCode() {
   const code = document.getElementById("code").value.trim();
   if (!code) return alert("Enter the code");
-  
-  // temporarily store code, move to display name step
+
   tempCode = code;
   document.getElementById("step2").style.display = "none";
   document.getElementById("step3").style.display = "block";
 }
 
+// Step 3: set display name & get key
 async function setDisplayName() {
   const displayName = document.getElementById("displayName").value.trim();
   if (!displayName) return alert("Enter a display name");
 
-  const res = await fetch(`${apiBase}/verify-code`, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({
-      email: tempEmail,
-      code: tempCode,
-      displayName
-    })
-  });
-  const data = await res.json();
-  if (data.success) {
-    issuedKey = data.key;
-    document.getElementById("step3").style.display = "none";
-    document.getElementById("step4").style.display = "block";
-    document.getElementById("key").innerText = issuedKey;
-  } else {
-    alert(data.error);
+  try {
+    const res = await fetch(`${apiBase}/verify-code`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        email: tempEmail,
+        code: tempCode,
+        displayName
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      issuedKey = data.key;
+      document.getElementById("step3").style.display = "none";
+      document.getElementById("step4").style.display = "block";
+      document.getElementById("key").innerText = issuedKey;
+    } else {
+      alert(data.error);
+    }
+  } catch (err) {
+    alert("Error verifying code. Try again.");
+    console.error(err);
   }
 }
 
+// Copy key to clipboard
 function copyKey() {
   navigator.clipboard.writeText(issuedKey);
   alert("Key copied to clipboard!");
