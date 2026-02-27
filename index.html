@@ -3,120 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Hub | Home</title>
+    <title>ynxpi | Home</title>
     <style>
-        /* CSS Variables for easy color changes */
+        /* Warm & Chill Color Palette */
         :root {
-            --bg-color: #0d0d0d;
-            --secondary-bg: #1a1a1a;
-            --accent-red: #ff3c3c;
-            --text-color: #f5f5f5;
-            --text-dim: #b3b3b3;
+            --bg-dark: #121212;       /* Deep matte black */
+            --card-bg: #1e1e1e;       /* Slightly lighter surface */
+            --accent-warm: #d4a373;   /* Muted sandy gold/amber */
+            --text-main: #e0e0e0;     /* Soft white */
+            --text-dim: #a0a0a0;      /* Muted gray */
+            --nav-height: 70px;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
             margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Top Navigation Bar */
+        nav {
+            height: var(--nav-height);
+            background-color: rgba(18, 18, 18, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Pushes name left, links right */
+            padding: 0 10%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--accent-warm);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-warm);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Navigation Tabs */
-        nav {
-            background-color: var(--secondary-bg);
-            border-bottom: 2px solid var(--accent-red);
-            padding: 1rem 2rem;
-            display: flex;
             justify-content: center;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-            padding: 5px 10px;
-        }
-
-        nav a:hover {
-            color: var(--accent-red);
-        }
-
-        nav a.active {
-            border-bottom: 2px solid var(--accent-red);
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
+            align-items: center;
             text-align: center;
             padding: 0 20px;
         }
 
-        h1 {
-            font-size: 3rem;
-            color: var(--accent-red);
-            text-shadow: 2px 2px 10px rgba(255, 60, 60, 0.3);
-            margin-bottom: 10px;
+        .hero h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            color: var(--text-main);
+            font-weight: 300;
         }
 
-        p {
+        .hero p {
             color: var(--text-dim);
-            font-size: 1.2rem;
-            line-height: 1.6;
+            max-width: 500px;
+            font-size: 1.1rem;
         }
 
-        .cta-button {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 30px;
-            background-color: var(--accent-red);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-
-        .cta-button:hover {
-            transform: scale(1.05);
-            background-color: #d32f2f;
+        .divider {
+            width: 50px;
+            height: 2px;
+            background: var(--accent-warm);
+            margin: 20px 0;
         }
 
         footer {
-            margin-top: auto;
-            padding: 20px;
             text-align: center;
-            font-size: 0.8rem;
+            padding: 40px;
             color: var(--text-dim);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="games.html">Games</a>
-        <a href="apps.html">Apps</a>
-        <a href="tools.html">Tools</a>
+        <a href="index.html" class="logo">ynxpi</a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="games.html">Games</a>
+            <a href="apps.html">Apps</a>
+            <a href="tools.html">Tools</a>
+        </div>
     </nav>
 
-    <div class="container">
-        <h1>PROJECT RED</h1>
-        <p>Welcome to my personal archive. Here you'll find a collection of my favorite games, useful web apps, and custom tools I've built or discovered.</p>
-        
-        <a href="games.html" class="cta-button">Start Exploring</a>
+    <div class="hero">
+        <h1>ynxpi</h1>
+        <div class="divider"></div>
+        <p>A quiet corner of the web for my personal projects, small games, and digital tools. Stay a while.</p>
     </div>
 
     <footer>
-        &copy; 2024 My GitHub Site | Built with Red & Black
+        &copy; 2026 YNXPI • LO-FI DIGITAL HUB
     </footer>
 
 </body>
