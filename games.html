@@ -9,7 +9,6 @@
             --bg-black: #000000;
             --card-bg: #050505;
             --accent-red: #8b0000;
-            --accent-bright: #ff0000;
             --text-main: #ffffff;
             --text-dim: #666666;
             --nav-height: 70px;
@@ -26,7 +25,7 @@
         /* Navigation */
         nav {
             height: var(--nav-height);
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -34,7 +33,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid #111;
         }
 
         .logo {
@@ -64,75 +63,96 @@
             color: var(--accent-red);
         }
 
-        /* Container */
+        /* Main Container */
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 60px auto;
             padding: 0 20px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
 
         header h1 {
             font-size: 3rem;
+            font-weight: 900;
             letter-spacing: -1px;
-            margin-bottom: 10px;
+            margin: 0;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
         }
 
         header p {
             color: var(--text-dim);
+            font-weight: 300;
         }
 
         /* Games Grid */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .game-card {
             background: var(--card-bg);
-            border: 1px solid #111;
-            padding: 25px;
-            border-radius: 4px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            border: 1px solid #151515;
+            padding: 30px;
+            border-radius: 8px;
             text-decoration: none;
             color: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centers the icon and text */
+            text-align: center;
         }
 
-        /* The Red Glow Hover Effect */
         .game-card:hover {
             border-color: var(--accent-red);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             box-shadow: 0 10px 30px rgba(139, 0, 0, 0.2);
+            background: #080808;
+        }
+
+        /* Game Icon Styling */
+        .game-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            object-fit: contain;
+            /* Optional: subtle red tint/glow for icons */
+            filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.2));
+            transition: filter 0.3s ease;
+        }
+
+        .game-card:hover .game-icon {
+            filter: drop-shadow(0 0 10px var(--accent-red));
         }
 
         .game-card h3 {
-            margin: 0 0 10px 0;
+            margin: 10px 0;
+            font-size: 1.5rem;
             color: var(--text-main);
-            font-size: 1.4rem;
         }
 
         .game-card p {
-            color: var(--text-dim);
             font-size: 0.9rem;
+            color: var(--text-dim);
             margin-bottom: 20px;
+            flex-grow: 1; /* Pushes tags to the bottom */
         }
 
         .tag {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             color: var(--accent-red);
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             border: 1px solid var(--accent-red);
-            padding: 2px 8px;
-            border-radius: 2px;
+            padding: 4px 12px;
+            border-radius: 4px;
         }
 
         footer {
@@ -159,27 +179,32 @@
     <div class="container">
         <header>
             <h1>Games</h1>
-            <p>Small experiments and interactive experiences.</p>
+            <p>Select a simulation to begin.</p>
         </header>
 
         <div class="games-grid">
-            <a href="#" class="game-card">
-                <span class="tag">Arcade</span>
+            
+            <a href="game1/index.html" class="game-card">
+                <img src="icons/game1-icon.png" alt="Game 1 Icon" class="game-icon">
                 <h3>Neon Void</h3>
-                <p>A fast-paced survival game set in an endless digital abyss. Don't touch the edges.</p>
+                <p>A fast-paced survival game set in an endless digital abyss.</p>
+                <span class="tag">Arcade</span>
             </a>
 
-            <a href="#" class="game-card">
-                <span class="tag">Strategy</span>
+            <a href="game2/index.html" class="game-card">
+                <img src="icons/game2-icon.png" alt="Game 2 Icon" class="game-icon">
                 <h3>Static Mind</h3>
                 <p>Turn-based puzzle solving where the world resets every five moves.</p>
+                <span class="tag">Strategy</span>
             </a>
 
-            <a href="#" class="game-card">
-                <span class="tag">Horror</span>
+            <a href="game3/index.html" class="game-card">
+                <img src="icons/game3-icon.png" alt="Game 3 Icon" class="game-icon">
                 <h3>Echo 404</h3>
                 <p>An audio-based horror experience. Listen closely to find the exit.</p>
+                <span class="tag">Horror</span>
             </a>
+
         </div>
     </div>
 
