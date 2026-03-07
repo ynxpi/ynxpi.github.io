@@ -7,12 +7,11 @@
     <style>
         /* Dark Red & Super Black Theme */
         :root {
-            --bg-black: #000000;       /* Pure Black */
-            --card-bg: #0a0a0a;        /* Near black for depth */
-            --accent-red: #8b0000;     /* Deep Dark Red */
-            --accent-bright: #ff0000;  /* Bright red for hover */
-            --text-main: #ffffff;      /* Pure white for readability */
-            --text-dim: #666666;       /* Muted grey */
+            --bg-black: #000000;
+            --accent-red: #8b0000;
+            --accent-bright: #ff0000;
+            --text-main: #ffffff;
+            --text-dim: #666666;
             --nav-height: 70px;
         }
 
@@ -22,13 +21,13 @@
             font-family: 'Inter', -apple-system, sans-serif;
             margin: 0;
             line-height: 1.6;
-            overflow-x: hidden;
+            overflow: hidden; /* Keeps the home page feeling tight and cinematic */
         }
 
         /* Top Navigation Bar */
         nav {
             height: var(--nav-height);
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -36,7 +35,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #1a1a1a; /* Subtle separator */
+            border-bottom: 1px solid #111;
         }
 
         .logo {
@@ -46,7 +45,7 @@
             color: var(--accent-red);
             text-decoration: none;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+            text-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
         }
 
         .nav-links {
@@ -64,13 +63,14 @@
             transition: 0.3s ease;
         }
 
+        /* Hover effect for links */
         .nav-links a:hover, .nav-links a.active {
             color: var(--accent-red);
         }
 
         /* Hero Section */
         .hero {
-            height: 70vh;
+            height: calc(100vh - var(--nav-height));
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -80,42 +80,59 @@
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: clamp(3rem, 10vw, 6rem); /* Responsive sizing */
             margin: 0;
             color: var(--text-main);
             font-weight: 900;
-            letter-spacing: -2px;
-            /* Subliminal red glow */
-            text-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+            letter-spacing: -3px;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.4);
         }
 
         .hero p {
             color: var(--text-dim);
             max-width: 500px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 300;
-            letter-spacing: 0.5px;
+            margin-bottom: 30px;
         }
 
         .divider {
-            width: 80px;
-            height: 3px;
+            width: 60px;
+            height: 4px;
             background: var(--accent-red);
-            margin: 30px 0;
+            margin: 20px 0;
             box-shadow: 0 0 15px var(--accent-red);
         }
 
-        footer {
-            text-align: center;
-            padding: 60px 40px;
-            color: #222; /* Very dark text for a "hidden" look */
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            transition: color 0.5s ease;
+        /* Call to Action Button */
+        .cta-btn {
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: 0.4s;
+            margin-top: 10px;
         }
 
-        footer:hover {
-            color: var(--accent-red);
+        .cta-btn:hover {
+            background: var(--accent-red);
+            color: white;
+            box-shadow: 0 0 20px var(--accent-red);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #1a1a1a;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
         }
     </style>
 </head>
@@ -134,11 +151,13 @@
     <div class="hero">
         <h1>ynxpi</h1>
         <div class="divider"></div>
-        <p>A quiet corner of the web for my personal projects, small games, and digital tools. Stay a while.</p>
+        <p>A quiet corner of the web for personal projects, small games, and digital tools.</p>
+        
+        <a href="games.html" class="cta-btn">Enter the Games</a>
     </div>
 
     <footer>
-        &copy; 2026 YNXPI • DARK DIGITAL HUB
+        &copy; 2026 YNXPI • LO-FI DIGITAL HUB
     </footer>
 
 </body>
