@@ -5,43 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ynxpi | Home</title>
     <style>
-        /* Warm & Chill Color Palette */
+        /* Dark Red & Super Black Theme */
         :root {
-            --bg-dark: #121212;       /* Deep matte black */
-            --card-bg: #1e1e1e;       /* Slightly lighter surface */
-            --accent-warm: #d4a373;   /* Muted sandy gold/amber */
-            --text-main: #e0e0e0;     /* Soft white */
-            --text-dim: #a0a0a0;      /* Muted gray */
+            --bg-black: #000000;       /* Pure Black */
+            --card-bg: #0a0a0a;        /* Near black for depth */
+            --accent-red: #8b0000;     /* Deep Dark Red */
+            --accent-bright: #ff0000;  /* Bright red for hover */
+            --text-main: #ffffff;      /* Pure white for readability */
+            --text-dim: #666666;       /* Muted grey */
             --nav-height: 70px;
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-black);
             color: var(--text-main);
             font-family: 'Inter', -apple-system, sans-serif;
             margin: 0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* Top Navigation Bar */
         nav {
             height: var(--nav-height);
-            background-color: rgba(18, 18, 18, 0.95);
+            background-color: rgba(0, 0, 0, 0.9);
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Pushes name left, links right */
+            justify-content: space-between;
             padding: 0 10%;
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid #1a1a1a; /* Subtle separator */
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: -1px;
-            color: var(--accent-warm);
+            letter-spacing: 2px;
+            color: var(--accent-red);
             text-decoration: none;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
         }
 
         .nav-links {
@@ -52,18 +57,20 @@
         .nav-links a {
             color: var(--text-dim);
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: 0.3s ease;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-warm);
+            color: var(--accent-red);
         }
 
         /* Hero Section */
         .hero {
-            height: 60vh;
+            height: 70vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -73,31 +80,42 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 5rem;
             margin: 0;
             color: var(--text-main);
-            font-weight: 300;
+            font-weight: 900;
+            letter-spacing: -2px;
+            /* Subliminal red glow */
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
         }
 
         .hero p {
             color: var(--text-dim);
             max-width: 500px;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
         .divider {
-            width: 50px;
-            height: 2px;
-            background: var(--accent-warm);
-            margin: 20px 0;
+            width: 80px;
+            height: 3px;
+            background: var(--accent-red);
+            margin: 30px 0;
+            box-shadow: 0 0 15px var(--accent-red);
         }
 
         footer {
             text-align: center;
-            padding: 40px;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            padding: 60px 40px;
+            color: #222; /* Very dark text for a "hidden" look */
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            transition: color 0.5s ease;
+        }
+
+        footer:hover {
+            color: var(--accent-red);
         }
     </style>
 </head>
@@ -120,7 +138,7 @@
     </div>
 
     <footer>
-        &copy; 2026 YNXPI • LO-FI DIGITAL HUB
+        &copy; 2026 YNXPI • DARK DIGITAL HUB
     </footer>
 
 </body>
