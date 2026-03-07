@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ynxpi | Games</title>
+    <style>
+        :root {
+            --bg-black: #000000;
+            --card-bg: #050505;
+            --accent-red: #8b0000;
+            --accent-bright: #ff0000;
+            --text-main: #ffffff;
+            --text-dim: #666666;
+            --nav-height: 70px;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            height: var(--nav-height);
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent-red);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-red);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-dim);
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid #111;
+            padding: 25px;
+            border-radius: 4px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* The Red Glow Hover Effect */
+        .game-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.2);
+        }
+
+        .game-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            font-size: 1.4rem;
+        }
+
+        .game-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--accent-red);
+            font-weight: 800;
+            letter-spacing: 1px;
+            border: 1px solid var(--accent-red);
+            padding: 2px 8px;
+            border-radius: 2px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 80px 0;
+            color: #222;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">ynxpi</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="games.html" class="active">Games</a>
+            <a href="apps.html">Apps</a>
+            <a href="tools.html">Tools</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Games</h1>
+            <p>Small experiments and interactive experiences.</p>
+        </header>
+
+        <div class="games-grid">
+            <a href="#" class="game-card">
+                <span class="tag">Arcade</span>
+                <h3>Neon Void</h3>
+                <p>A fast-paced survival game set in an endless digital abyss. Don't touch the edges.</p>
+            </a>
+
+            <a href="#" class="game-card">
+                <span class="tag">Strategy</span>
+                <h3>Static Mind</h3>
+                <p>Turn-based puzzle solving where the world resets every five moves.</p>
+            </a>
+
+            <a href="#" class="game-card">
+                <span class="tag">Horror</span>
+                <h3>Echo 404</h3>
+                <p>An audio-based horror experience. Listen closely to find the exit.</p>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 YNXPI • DARK DIGITAL HUB
+    </footer>
+
+</body>
+</html>
