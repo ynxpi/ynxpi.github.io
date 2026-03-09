@@ -4,53 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ynxpi | Home</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+
     <style>
-        /* Dark Red & Super Black Theme */
+        /* Modernized Dark Red & Super Black Theme */
         :root {
-            --bg-black: #000000;
-            --accent-red: #8b0000;
-            --accent-bright: #ff0000;
-            --text-main: #ffffff;
-            --text-dim: #666666;
-            --nav-height: 70px;
+            --bg-black: #030000; /* Slightly lifted off pure black for better contrast */
+            --accent-red: #d90000;
+            --accent-glow: #ff1a1a;
+            --text-main: #f4f4f5;
+            --text-dim: #a1a1aa;
+            --nav-height: 75px;
         }
 
         body {
-            background-color: var(--bg-black);
+            /* Added a subtle radial gradient for depth */
+            background: radial-gradient(circle at 50% 30%, #1a0000 0%, var(--bg-black) 70%);
             color: var(--text-main);
             font-family: 'Inter', -apple-system, sans-serif;
             margin: 0;
             line-height: 1.6;
-            overflow: hidden; /* Keeps the home page feeling tight and cinematic */
+            height: 100vh;
+            overflow: hidden; 
         }
 
-        /* Top Navigation Bar */
+        /* Glassmorphism Top Navigation */
         nav {
             height: var(--nav-height);
-            background-color: rgba(0, 0, 0, 0.95);
+            background-color: rgba(3, 0, 0, 0.6);
+            backdrop-filter: blur(12px); /* Creates the frosted glass effect */
+            -webkit-backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 10%;
+            padding: 0 8%;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #111;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
             letter-spacing: 2px;
-            color: var(--accent-red);
+            color: var(--text-main);
             text-decoration: none;
             text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
+            transition: 0.3s ease;
+        }
+
+        .logo span {
+            color: var(--accent-red);
+            text-shadow: 0 0 15px rgba(217, 0, 0, 0.4);
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 40px;
         }
 
         .nav-links a {
@@ -59,16 +78,33 @@
             font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s ease;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        /* Hover effect for links */
+        /* Animated underline hover effect */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-red);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--accent-red);
+        }
+
         .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-red);
+            color: var(--text-main);
         }
 
-        /* Hero Section */
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section with Entrance Animation */
         .hero {
             height: calc(100vh - var(--nav-height));
             display: flex;
@@ -77,69 +113,103 @@
             align-items: center;
             text-align: center;
             padding: 0 20px;
+            animation: fadeUp 1s ease-out forwards; /* Applied animation */
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 10vw, 6rem); /* Responsive sizing */
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3.5rem, 12vw, 7rem);
             margin: 0;
             color: var(--text-main);
             font-weight: 900;
-            letter-spacing: -3px;
-            text-shadow: 0 0 20px rgba(139, 0, 0, 0.4);
+            letter-spacing: -2px;
+            text-shadow: 0 0 40px rgba(217, 0, 0, 0.3);
+            line-height: 1;
+        }
+
+        .divider {
+            width: 0px;
+            height: 3px;
+            background: var(--accent-red);
+            margin: 30px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 15px var(--accent-red);
+            animation: expandLine 1s ease-out 0.5s forwards;
         }
 
         .hero p {
             color: var(--text-dim);
-            max-width: 500px;
-            font-size: 1.1rem;
-            font-weight: 300;
-            margin-bottom: 30px;
+            max-width: 550px;
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin-bottom: 40px;
         }
 
-        .divider {
-            width: 60px;
-            height: 4px;
-            background: var(--accent-red);
-            margin: 20px 0;
-            box-shadow: 0 0 15px var(--accent-red);
-        }
-
-        /* Call to Action Button */
+        /* Modernized Call to Action Button */
         .cta-btn {
-            padding: 12px 30px;
+            padding: 14px 35px;
             background: transparent;
             border: 1px solid var(--accent-red);
-            color: var(--accent-red);
+            border-radius: 4px; /* Slight rounding looks more modern */
+            color: var(--text-main);
             text-decoration: none;
             text-transform: uppercase;
-            font-weight: 800;
-            font-size: 0.8rem;
+            font-weight: 600;
+            font-size: 0.85rem;
             letter-spacing: 2px;
-            transition: 0.4s;
-            margin-top: 10px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
 
         .cta-btn:hover {
             background: var(--accent-red);
-            color: white;
-            box-shadow: 0 0 20px var(--accent-red);
+            color: #fff;
+            box-shadow: 0 0 25px rgba(217, 0, 0, 0.6);
+            transform: translateY(-3px);
+            border-color: var(--accent-glow);
         }
 
         footer {
             position: absolute;
-            bottom: 20px;
+            bottom: 25px;
             width: 100%;
             text-align: center;
-            color: #1a1a1a;
-            font-size: 0.7rem;
+            color: #555; /* Lightened so it's readable */
+            font-size: 0.75rem;
             letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes expandLine {
+            to {
+                width: 80px;
+            }
+        }
+
+        /* Basic Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links { display: none; /* Hide links on mobile for now */ }
+            .hero p { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="logo">ynxpi</a>
+        <a href="index.html" class="logo">ynx<span>pi</span></a>
         <div class="nav-links">
             <a href="index.html" class="active">Home</a>
             <a href="games.html">Games</a>
